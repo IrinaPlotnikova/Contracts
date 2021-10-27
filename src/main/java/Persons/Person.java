@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Data
 @AllArgsConstructor
@@ -22,7 +23,7 @@ public class Person {
     private String lastName;
 
     @NonNull
-    private Calendar birthday;
+    private LocalDate dateOfBirth;
 
     private boolean isMale;
 
@@ -46,5 +47,15 @@ public class Person {
         if (passport.length() > 0) {
             this.passport = passport;
         }
+    }
+
+    /**
+     * Returns person's age. If date of birth is before date 'now' - returns 0.
+     *
+     * @param now the date on which the person's age was requested.
+     */
+    public int getAge(@NonNull LocalDate now) {
+
+        return Math.max(0, (int) ChronoUnit.YEARS.between(dateOfBirth, now));
     }
 }
