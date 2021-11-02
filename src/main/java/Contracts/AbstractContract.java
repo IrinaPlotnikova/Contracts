@@ -7,18 +7,18 @@ import java.time.LocalDate;
 
 
 public class AbstractContract {
-    private int ID;
+    protected int ID;
 
-    private int number;
-
-    @NonNull
-    private LocalDate startDate;
+    protected int number;
 
     @NonNull
-    private LocalDate endDate;
+    protected LocalDate startDate;
 
     @NonNull
-    private Person owner;
+    protected LocalDate endDate;
+
+    @NonNull
+    protected Person owner;
 
     public AbstractContract(int ID, int number, @NonNull LocalDate startDate, @NonNull LocalDate endDate, @NonNull Person owner) {
         this.ID = ID;
