@@ -4,6 +4,7 @@ import Persons.Person;
 import lombok.NonNull;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class PhoneContract extends AbstractContract {
     private int numberOfMinutes;
@@ -47,5 +48,36 @@ public class PhoneContract extends AbstractContract {
     public void setAmountOfData(int amountOfData) {
         if (amountOfData >= 0)
             this.amountOfData = amountOfData;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PhoneContract)) return false;
+        PhoneContract that = (PhoneContract) o;
+        return getID() == that.getID() && getNumber() == that.getNumber() && getNumberOfMinutes() == that.getNumberOfMinutes() &&
+                getNumberOfTexts() == that.getNumberOfTexts() && getAmountOfData() == that.getAmountOfData() &&
+                getStartDate() == that.getStartDate() && getEndDate() == that.getEndDate() && getOwner() == getOwner();
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getID(), getNumber(), getNumberOfMinutes(), getNumberOfTexts(), getAmountOfData(),
+                getStartDate(), getEndDate(), getOwner());
+    }
+
+    @Override
+    public String toString() {
+        return "PhoneContract{" +
+                "ID=" + ID +
+                ", number=" + number +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", owner=" + owner +
+                ", numberOfMinutes=" + numberOfMinutes +
+                ", numberOfTexts=" + numberOfTexts +
+                ", amountOfData=" + amountOfData +
+                '}';
     }
 }
