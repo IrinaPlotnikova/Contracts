@@ -1,9 +1,15 @@
 package Repositories;
 
 import Contracts.AbstractContract;
+import Sorters.ISorter;
 import lombok.NonNull;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Repository{
     private int size;
@@ -23,6 +29,12 @@ public class Repository{
         this.capacity = Math.max(capacity, 5);
         size = 0;
         contracts = new AbstractContract[capacity];
+    }
+
+    public Repository(AbstractContract[] contracts){
+        capacity = contracts.length;
+        size = capacity;
+        this.contracts = contracts;
     }
 
     /**
@@ -55,6 +67,27 @@ public class Repository{
     }
 
 
+    public Repository find(Predicate<AbstractContract> p){
+        List<AbstractContract> resultList = Arrays.stream(contracts).filter(p).collect(Collectors.toList());
+        AbstractContract[] resultArray = new AbstractContract[resultList.size()];
+        int i = 0;
+        for (AbstractContract contract : resultList){
+            resultArray[i] = contract;
+            i++;
+        }
+        return new Repository(resultArray);
+    }
+
+
+    public void sort(ISorter sorter, Comparator<AbstractContract> comparator){
+        sorter.sort(contracts, comparator);
+    }
+
+
+    public AbstractContract[] toArray(){
+        return contracts;
+    }
+
     /**
      * In case there's a contract with id == ID in the repository - removes it, otherwise - does nothing.
      * */
@@ -84,7 +117,7 @@ public class Repository{
      * Adds extra space to the repository.
      * */
     private void extendRepository(){
-        capacity = (int)(capacity * 1.2);
+        capacity = (int)(capacity * 1.2) + 1;
         AbstractContract[] new_contracts = new AbstractContract[capacity];
         System.arraycopy(contracts, 0, new_contracts, 0, size);
         contracts = new_contracts;
