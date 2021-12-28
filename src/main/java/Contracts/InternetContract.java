@@ -30,7 +30,7 @@ public class InternetContract extends AbstractContract{
         if (!(o instanceof InternetContract)) return false;
         InternetContract that = (InternetContract) o;
         return getID() == that.getID() && getNumber() == that.getNumber() && getSpeed() == that.getSpeed() &&
-                getStartDate() == that.getStartDate() && getEndDate() == that.getEndDate() && getOwner() == getOwner();
+                getStartDate().equals(that.getStartDate()) && getEndDate().equals(that.getEndDate()) && getOwner().equals(that.getOwner());
     }
 
     @Override

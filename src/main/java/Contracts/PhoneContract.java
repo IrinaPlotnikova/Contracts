@@ -57,7 +57,7 @@ public class PhoneContract extends AbstractContract {
         PhoneContract that = (PhoneContract) o;
         return getID() == that.getID() && getNumber() == that.getNumber() && getNumberOfMinutes() == that.getNumberOfMinutes() &&
                 getNumberOfTexts() == that.getNumberOfTexts() && getAmountOfData() == that.getAmountOfData() &&
-                getStartDate() == that.getStartDate() && getEndDate() == that.getEndDate() && getOwner() == getOwner();
+                getStartDate().equals(that.getStartDate()) && getEndDate().equals(that.getEndDate()) && getOwner().equals(that.getOwner());
 
     }
 

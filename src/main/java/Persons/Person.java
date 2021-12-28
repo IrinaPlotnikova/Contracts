@@ -7,6 +7,7 @@ import lombok.NonNull;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -57,5 +58,20 @@ public class Person {
     public int getAge(@NonNull LocalDate now) {
 
         return Math.max(0, (int) ChronoUnit.YEARS.between(dateOfBirth, now));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
+        return getID() == person.getID() && isMale() == person.isMale() && getFirstName().equals(person.getFirstName()) &&
+                getPatronymicName().equals(person.getPatronymicName()) && getLastName().equals(person.getLastName()) &&
+                getDateOfBirth().equals(person.getDateOfBirth()) && getPassport().equals(person.getPassport());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getID(), getFirstName(), getPatronymicName(), getLastName(), getDateOfBirth(), isMale(), getPassport());
     }
 }

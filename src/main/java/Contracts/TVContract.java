@@ -41,8 +41,8 @@ public class TVContract extends AbstractContract{
         if (this == o) return true;
         if (!(o instanceof TVContract)) return false;
         TVContract that = (TVContract) o;
-        return getID() == that.getID() && getNumber() == that.getNumber() && getPackageName() == that.getPackageName() &&
-                getStartDate() == that.getStartDate() && getEndDate() == that.getEndDate() && getOwner() == getOwner();
+        return getID() == that.getID() && getNumber() == that.getNumber() && getPackageName().equals(that.getPackageName()) &&
+                getStartDate().equals(that.getStartDate()) && getEndDate().equals(that.getEndDate()) && getOwner().equals(that.getOwner());
     }
 
     @Override
