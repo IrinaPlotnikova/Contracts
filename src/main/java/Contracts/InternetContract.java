@@ -9,7 +9,7 @@ import java.util.Objects;
 public class InternetContract extends AbstractContract{
     private int speed;
 
-    public InternetContract(int ID, int number, @NonNull LocalDate startDate, @NonNull LocalDate endDate, @NonNull Person owner, int speed) {
+    public InternetContract(int ID, int number, LocalDate startDate, LocalDate endDate, Person owner, int speed) {
         super(ID, number, startDate, endDate, owner);
         if (speed >= 0)
             this.speed = speed;

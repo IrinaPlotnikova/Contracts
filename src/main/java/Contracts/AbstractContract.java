@@ -8,19 +8,12 @@ import java.time.LocalDate;
 
 public class AbstractContract {
     protected int ID;
-
     protected int number;
-
-    @NonNull
     protected LocalDate startDate;
-
-    @NonNull
     protected LocalDate endDate;
-
-    @NonNull
     protected Person owner;
 
-    public AbstractContract(int ID, int number, @NonNull LocalDate startDate, @NonNull LocalDate endDate, @NonNull Person owner) {
+    public AbstractContract(int ID, int number, LocalDate startDate, LocalDate endDate, Person owner) {
         this.ID = ID;
         this.number = number;
         this.startDate = startDate;
@@ -44,31 +37,28 @@ public class AbstractContract {
         this.number = number;
     }
 
-    @NonNull
     public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(@NonNull LocalDate startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    @NonNull
     public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(@NonNull LocalDate endDate) {
+    public void setEndDate(LocalDate endDate) {
         if (startDate.compareTo(endDate) <= 0)
             this.endDate = endDate;
     }
 
-    @NonNull
     public Person getOwner() {
         return owner;
     }
 
-    public void setOwner(@NonNull Person owner) {
+    public void setOwner(Person owner) {
         this.owner = owner;
     }
 }

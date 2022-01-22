@@ -7,11 +7,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class TVContract extends AbstractContract{
-    @NonNull
     String packageName;
 
-    public TVContract(int ID, int number, @NonNull LocalDate startDate, @NonNull LocalDate endDate, @NonNull Person owner,
-                      @NonNull String packageName) {
+    public TVContract(int ID, int number, LocalDate startDate, LocalDate endDate, Person owner, String packageName) {
         super(ID, number, startDate, endDate, owner);
         this.packageName = packageName;
     }

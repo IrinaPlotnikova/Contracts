@@ -11,8 +11,8 @@ public class PhoneContract extends AbstractContract {
     private int numberOfTexts;
     private int amountOfData;
 
-    public PhoneContract(int ID, int number, @NonNull LocalDate startDate, @NonNull LocalDate endDate,
-                         @NonNull Person owner, int numberOfMinutes, int numberOfTexts, int amountOfData) {
+    public PhoneContract(int ID, int number, LocalDate startDate, LocalDate endDate,
+                         Person owner, int numberOfMinutes, int numberOfTexts, int amountOfData) {
         super(ID, number, startDate, endDate, owner);
 
         if (numberOfMinutes >= 0)

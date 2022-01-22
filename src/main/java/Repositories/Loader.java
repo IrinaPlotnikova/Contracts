@@ -5,6 +5,8 @@ import Contracts.InternetContract;
 import Contracts.PhoneContract;
 import Contracts.TVContract;
 import Persons.Person;
+import Validation.ContractValidation;
+import Validation.ValidationResultStatus;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -54,7 +56,10 @@ public class Loader {
 
             String newContract;
             while ((newContract = reader.readLine()) != null){
-                repository.add(getContractFromCSVString(newContract));
+                AbstractContract contract = getContractFromCSVString(newContract);
+                if (ContractValidation.validate(contract).getStatus() != ValidationResultStatus.Error){
+                    repository.add(contract);
+                }
             }
 
             fileReader.close();
@@ -110,13 +115,53 @@ public class Loader {
      * */
     private static AbstractContract getContractFromCSVString(String contractInfo){
         String[] info = contractInfo.split(";");
-        int contractId = Integer.parseInt(info[2]);
-        int contractNumber = Integer.parseInt(info[3]);
-        LocalDate contractStartDate = LocalDate.parse(info[0]);
-        LocalDate contractEndDate = LocalDate.parse(info[1]);
+        if (info.length < 13){
+            return null;
+        }
 
-        Person owner = new Person(Integer.parseInt(info[4]), info[5], info[6], info[7], LocalDate.parse(info[8]),
-                "true".equals(info[9]), info[10]);
+        int contractId;
+        int contractNumber;
+        LocalDate contractStartDate;
+        LocalDate contractEndDate;
+        Person owner;
+
+        try {
+            contractId = Integer.parseInt(info[2]);
+        }
+        catch (Exception e){
+            contractId = 0;
+        }
+
+        try{
+            contractNumber = Integer.parseInt(info[3]);
+        }
+        catch (Exception e){
+            contractNumber = 0;
+        }
+
+        try{
+            contractStartDate = LocalDate.parse(info[0]);
+        }
+        catch (Exception e){
+            contractStartDate = null;
+        }
+
+        try{
+            contractEndDate = LocalDate.parse(info[1]);
+        }
+        catch (Exception e){
+            contractEndDate = null;
+        }
+
+        try{
+            int ownerId = Integer.parseInt(info[4]);
+            LocalDate dateOfBirth = LocalDate.parse(info[8]);
+            owner = new Person(ownerId, info[5], info[6], info[7], dateOfBirth,
+                    "true".equals(info[9]), info[10]);
+        }
+        catch (Exception e){
+            owner = null;
+        }
 
         if (info[11].equals("TV")){
             String packageName = info[12];
@@ -124,14 +169,41 @@ public class Loader {
         }
 
         if (info[11].equals("Internet")){
-            int speed = Integer.parseInt(info[12]);
+            int speed;
+            try{
+                speed = Integer.parseInt(info[12]);
+            }
+            catch (Exception e){
+                speed = 0;
+            }
             return new InternetContract(contractId, contractNumber, contractStartDate, contractEndDate, owner, speed);
         }
 
         String[] values = info[12].split(",");
-        int numberOfMinutes = Integer.parseInt(values[0]);
-        int numberOfTexts = Integer.parseInt(values[1]);
-        int amountOfData = Integer.parseInt(values[2]);
+        int numberOfMinutes;
+        int numberOfTexts;
+        int amountOfData;
+
+        try{
+            numberOfMinutes = Integer.parseInt(values[0]);
+        }
+        catch (Exception e){
+            numberOfMinutes = 0;
+        }
+
+        try {
+            numberOfTexts = Integer.parseInt(values[1]);
+        }
+        catch (Exception e){
+            numberOfTexts = 0;
+        }
+
+        try {
+            amountOfData = Integer.parseInt(values[2]);
+        }
+        catch (Exception e){
+            amountOfData = 0;
+        }
 
         return new PhoneContract(contractId, contractNumber, contractStartDate, contractEndDate, owner, numberOfMinutes,
                 numberOfTexts, amountOfData);
